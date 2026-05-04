@@ -1,159 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my college</title>
-    <link rel="stylesheet" href="college.css">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <div class="width-100 top-header">
-        <div class="container">
-            <div class="width-100">
-                <b class="news-list"> NEWS:</b>
-                <marquee class="headquote"> My College: Intelligence plus curisoity-that is the root of true education.</marquee>
+    <!-- desin header-->
+    <div class="container-fluid">
+        <header class="header">
+            <a href="#" class="logo"> Portfolio</a>
+
+            <i class="fa-solid fa-bars" id="menu-bar"></i>
+
+            <nav class="navbar">
+                <a href="#" class="active"> Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Portfolio</a>
+                <a href="#">Contact</a>
+            </nav>
+
+        </header>
+
+        <!-- Home section section -->
+        <section class="home" id="home">
+            <div class="home-contact">
+                <h3> Hi, I'm Akhilesh</h3>
+                <h1> Diploma Engineer</h1>
+                <h3> And I am a <span> Frontend Developer </span></h3>
+                <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique eius temporibus sint tempore
+                    quasi
+                    quisquam dignissimos! Ab, saepe, non, laudantium libero illo dolorem at enim inventore distinctio
+                    rerum
+                    natus nobis.</p>
+                <div class="social-media">
+                    <a href="https://www.facebook.com/share/1R3TSVPU4V/"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/akhilesh_2kumar?igsh=MWZlNWZxN2xxaG83Yg=="><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+                <a href="#" class="btn">Download CV</a>
             </div>
-        </div>
-    </div>
-    <div class="header-menu">
-        <div class="container">
-            <div class="logo">
-                <img src="logoo.png" width="100px" height="90px">
-                <ul class="main-menu">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Academics</a></li>
-                    <li><a href="#">Admission</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Notice board</a></li>
-                    <li><a href="#">Contact us</a></li>
-                </ul>
-                <div class="heading">
-                  <h1 style="color: yellow; font-size: 50px; font-style: italic;font-weight: bold;">Most Welcome Your!</h1>
-                  <p style="color: #ffffff; font-size: 30px; margin-left: 90px;margin-top: 10px;"> Government polytechnic Adampur</p>
+            <div class="home-img">
+                <img src="ss.jpg" alt="">
+            </div>
+        </section>
+        <!-- About section  Design-->
+        <section class="about" id="about">
+            <div class="about-img">
+                <img src="ak.jpg" alt="photo">
+            </div>
+            <div class="about-content">
+                <h2 class="heading">ABOUT <span>Me</span></h2>
+                <h3> Frontend Developer</h3>
+                <p>I'm a passionate Frontend Developer with a strong eye for design and user experience. I specialize in
+                    building responsive, accessible, and performant web interfaces using modern technologies like HTML5,
+                    CSS3, JavaScript, and frameworks such as Bootstrap, and Tailwind CSS. With a deep understanding
+                    of
+                    UI/UX principles, I transform complex problems into intuitive, user-friendly solutions.</p>
+                <a href="#" class="btn">Read more</a>
+            </div>
+        </section>
+        <!-- Services -->
+        <section class="services" id="services">
+            <h2 class="heading">My <span>Services</span></h2>
+
+            <div class="services-container">
+                <div class="services-box">
+                    <i class="fa-solid fa-code"></i>
+                    <h3> Web Development</h3>
+                    <p> Web development is the process of creating websites or web applications that run on the
+                        internet. It
+                        includes everything from designing simple static pages to building complex web-based software
+                        and
+                        platforms.
+                        I'm a passionate Frontend Developer with a strong eye for design and user experience. </p>
+                    <a href="#" class="btn">Read more</a>
+                </div>
+                <div class="services-box">
+                    <i class="fa-solid fa-palette"></i>
+                    <h3> UI / UX Design</h3>
+                    <p>UI/UX Design stands for User Interface (UI) and User Experience (UX) design. It is a key part of
+                        creating websites, mobile apps, and software that are both attractive and easy to use.UI (User
+                        Interface) Design focuses on how the product looks — the layout, colors, fonts, buttons, and
+                        images
+                        that users see and interact with.</p>
+                    <a href="#" class="btn">Read more</a>
+                </div>
+                <div class="services-box">
+                    <i class="fa-brands fa-android"></i>
+                    <h3> App Development</h3>
+                    <p> Designed and developed user-friendly mobile applications using Flutter / React Native / Android
+                        (Java/Kotlin) / iOS (Swift).
+
+                        Built responsive UI components and ensured cross-platform performance and compatibility.
+
+                        Integrated RESTful APIs for dynamic content and real-time data fetching.
+                    </p>
+                    <a href="#" class="btn">Read more</a>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="width-100">
-        <img class="slider-width" src="college.jpg">
-    </div>
-    <div class="width-100 margin-top-50">
-        <div class="comtainer">
-            <div class="width-33">
-                <div class="latest-news">
-                    <div class="heading-sect">
-                        <h3 class="head-title">Latest News</h3>
+        </section>
+        <!-- Tecnical Skills-->
+        <section>
+            <div class="skill">
+                <!-- <hr style="text-decoration-color: aliceblue; "> -->
+                <h2 class="heading">Technical <span>Skills</span></h2>
+                <div class="Tecnical">
+                    <div class="Technical-skill">
+                        <!-- <i class="fa-solid fa-code"></i> -->
+                        <h3></h3>
+                        <h2>
+                            <ol>
+                                <ul> C Language</ul>
+                                <ul> HTML </ul>
+                                <ul> CSS</ul>
+                                <ul> JavaScript</ul>
+                                <ul> Bootstrap</ul>
+                            </ol>
+                        </h2>
+                        <a href="#" class="btn">Read more</a>
                     </div>
-                    <marquee direction="up">
-                     <ul class="letest-news-ul">
-                        <li>31 March 2025 communication skill 2nd Examnation</li>
-                        <li>2 June 2025 Energy Conversation Examnation</li>
-                        <li>3 June 2025 Database Managemant System Examnation</li>
-                        <li>5 June 2025 Opearting System Examnation</li>
-                        <li>6 June 2025 Object Oreinted Programing Using Java Examanation</li>
-                        <li>9 June 2025 E-Commerce & Digital Marketing Examnation</li>
-                        <li>4 June 2025 Enviromential Studies Examnation</li>
-                        <li>8 June 2025 IT System Examnation</li>
-                     </ul>
-                    </marquee>
                 </div>
+        </section>
+        <!-- Contact Details-->
+        <section>
+            <h2 class="heading">Contact <span>Me</span></h2>
+            <div class="clform">
+                <input type="text" class="inputs" placeholder="Enter Your Name" required>
+                <input type="text" class="inputs" placeholder="Enter Your Last name" required>
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
             </div>
-        </div>
-    </div>
-    <div class="width-33">
-        <div class="event-list">
-            <div class="heading-sect">
-             <h3 class="head-title"> Upcoming Event</h3>
-            </div>
-            <ul class="upcoming-event-list">
-                <li> <span class="event-date">4 <br> April</span><span> Seminar is (Saahi Global Services Pvt. Ltd. )conducted on CSE</span></li>
-                <li> <span class="event-date">5 <br> April</span><span> Seminar is (Techsima Pvt. Ltd. ) conducted on CSE</span></li>
-                <li> <span class="event-date">7 <br> April</span><span> Seminar is(Arcane Pvt. Ltd. ) conducted on CSE</span></li>
-                <li> <span class="event-date">8 <br> April</span><span> Seminar is(Techpile Technology Pvt. Ltd. ) conducted on CSE</span></li>
-                <li> <span class="event-date">16 <br> April</span><span> Seminar is(Kss Technology Pvt. Ltd. ) conducted on CSE</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="width-33">
-        <div class="event-list">
-            <div class="heading-sect">
-             <h3 class="head-title"> Notice Boad</h3>
-            </div>
-            <ul class="Notice-board-list">
-                <li> Participation in Climate Correction Day (CCD)</li>
-                <li>You Prepration your lesson your Examanation has been nearly.</li>
-                <li>All students inform you please attend you class.</li>
-                <li>You fill your bord  form</li>
-                 </ul>
-    
-        </div>
-    </div>
-    <div class="width-100">
-        <div class="container">
-            <div class="width-33">
-                <div class="our-principal">
-                    <div class="heading-sect">
-                        <h3 class="head-title"> Useful Information</h3>
-                    </div>
-                    <ul class="Useful-info-ul">
-                        <li> <a href="#">Online Service</a></li>
-                        <li> <a href="#">Online Result</a></li>
-                        <li> <a href="#">Exam Time Table</a></li>
-                        <li> <a href="#">Tenders</a></li>
-                    </ul>
+        </section>
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="footer-container">
+
+                <div class="footer-section">
+                    <h1>About Us</h1>
+                    <p style="font-size: 20px;">We provide the best services for our customers with quality and trust.</p>
                 </div>
+
+                <div class="footer-section">
+                    <h1>Quick Links</h1>
+                    <a href="index.html">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Services</a>
+                    <a href="#">Contact</a>
+                </div>
+
+                <div class="footer-section">
+                    <h1>Contact</h1>
+                    <p>Email: rnraj9696@gmail.com</p>
+                    <p>Phone: +91 6387089216</p>
+                </div>
+
             </div>
-        </div>
-    </div>
-    <div class="width-33">
-        <div class="event-list">
-            <div class="heading-sect">
-             <h3 class="head-title"> Notice Boad</h3>
+
+            <div class="footer-bottom">
+                © 2026 Your Website | All Rights Reserved
             </div>
-            <ul class="Notice-board-list">
-               <li> Participation in Climate Correction Day (CCD)</li>
-             <li>You Prepration your lesson your Examanation has been nearly.</li>
-             <li>All students inform you please attend you class.</li>
-             <li>You fill your bord  form</li>
-            </ul>
-        </div>
-   </div>
-   <div class="width-33">
-       <div class="event-list">
-          <div class="heading-sect">
-           <h3 class="head-title"> Notice Boad</h3>
-          </div>
-         <ul class="Notice-board-list">
-             <li> Participation in Climate Correction Day (CCD)</li>
-             <li>You Prepration your lesson your Examanation has been nearly.</li>
-             <li>All students inform you please attend you class.</li>
-             <li>You fill your bord  form</li>
-           </ul>
-       </div>
-   </div>
-    <div class="width-100 margin-top-50">
-       <div class="container">
-           <h3 class="gallery-head-style"> Gallery</h3>
-           <div class="width-25">
-               <img src="1.jpg" class="Gallery-img">
-               <img src="10.jpg" class="Gallery-img">
-               <img src="12.jpg" class="Gallery-img">
-               <img src="5.jpg" class="Gallery-img">
-               <img src="9.jpg" class="Gallery-img">
-               <img src="16.jpg" class="Gallery-img">
-               <img src="13.jpg" class="Gallery-img">
-               <img src="15.jpg" class="Gallery-img">
-               <img src="11.jpg" class="Gallery-img">
-               <img src="8.jpg" class="Gallery-img">
-               <img src="2.jpg" class="Gallery-img">
-               <img src="6.jpg" class="Gallery-img">
-               <img src="7.jpg" class="Gallery-img">
-               <img src="4.jpg" class="Gallery-img">
-               <img src="3.jpg" class="Gallery-img">
-               <img src="14.jpg" class="Gallery-img">
-           </div>
-       </div>
+        </footer>
+        <!-- Footer End -->
+
     </div>
+    <!-- Contact-->
 </body>
+
 </html>
