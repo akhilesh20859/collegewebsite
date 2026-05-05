@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0a;--surface:#111;--surface2:#181818;
+    --accent:#00d4ff;--accent2:#ff6b35;--accent3:#7cfc00;
+    --text:#f0ede6;--muted:#888880;--border:rgba(240,237,230,.08);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+  #cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .2s,height .2s}
+  #cursor-ring{position:fixed;width:34px;height:34px;border:1px solid rgba(0,212,255,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s ease-out,top .1s ease-out}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 3rem;background:linear-gradient(to bottom,rgba(10,10,10,.95),transparent)}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--accent);text-decoration:none}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;transition:color .2s;font-weight:400}
+  .nav-links a:hover{color:var(--text)}
+
+  #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:3rem;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 35%,rgba(0,212,255,.05) 0%,transparent 70%),radial-gradient(ellipse 40% 35% at 85% 75%,rgba(124,252,0,.04) 0%,transparent 60%)}
+  .hero-grid{position:absolute;inset:0;opacity:.025;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:50px 50px;animation:gridDrift 25s linear infinite}
+  @keyframes gridDrift{to{background-position:50px 50px}}
+  .particle{position:absolute;font-family:'DM Mono',monospace;font-size:.62rem;color:rgba(0,212,255,.13);animation:floatUp linear infinite;pointer-events:none;user-select:none}
+  @keyframes floatUp{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}90%{opacity:.4}100%{transform:translateY(-110vh) rotate(12deg);opacity:0}}
+
+  .hero-eyebrow{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.22em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .3s forwards}
+  .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,13vw,13rem);line-height:.9;letter-spacing:-.02em;color:var(--text)}
+  .hero-name .line{display:block;opacity:0;animation:slideIn .9s cubic-bezier(.16,1,.3,1) forwards}
+  .hero-name .line:nth-child(1){animation-delay:.5s}
+  .hero-name .line:nth-child(2){animation-delay:.65s;color:var(--accent)}
+  .hero-name .line:nth-child(3){animation-delay:.8s}
+  .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:3rem;opacity:0;animation:fadeUp .8s 1.1s forwards}
+  .hero-desc{max-width:340px;font-size:.92rem;color:var(--muted);line-height:1.8}
+  .hero-scroll{display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .scroll-line{width:1px;height:55px;background:var(--muted);animation:linePulse 2s ease-in-out infinite}
+  @keyframes linePulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.3)}}
+
+  .marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.9rem 0;background:var(--surface)}
+  .marquee-track{display:flex;width:max-content;animation:marquee 22s linear infinite}
+  .marquee-track:hover{animation-play-state:paused}
+  .marquee-item{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.15em;color:var(--muted);padding:0 2rem;border-right:1px solid var(--border);white-space:nowrap;transition:color .2s}
+  .marquee-item:hover{color:var(--accent)}
+  .marquee-item.hi{color:var(--accent)}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+
+  #skills{padding:7rem 3rem}
+  .section-label{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:.28em;text-transform:uppercase;margin-bottom:3rem;display:flex;align-items:center;gap:1rem}
+  .section-label::after{content:'';flex:1;max-width:100px;height:1px;background:var(--border)}
+  .skills-intro{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,3rem);line-height:1.2;color:var(--text);margin-bottom:4rem}
+  .skills-intro em{font-style:italic;color:var(--accent)}
+
+  .skill-tabs{display:flex;gap:.5rem;margin-bottom:3rem;flex-wrap:wrap}
+  .skill-tab{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 18px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:none;transition:all .2s}
+  .skill-tab.active,.skill-tab:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1.5px}
+  .skill-card{background:var(--surface);padding:1.8rem 1.4rem;border:1px solid var(--border);position:relative;overflow:hidden;cursor:none;transition:border-color .3s,transform .3s;display:flex;flex-direction:column;gap:.9rem}
+  .skill-card::before{content:'';position:absolute;inset:0;background:var(--card-color,var(--accent));opacity:0;transition:opacity .3s}
+  .skill-card:hover{border-color:var(--card-color,var(--accent));transform:translateY(-3px)}
+  .skill-card:hover::before{opacity:.05}
+  .skill-icon{font-family:'DM Mono',monospace;font-size:1.4rem;color:var(--card-color,var(--accent));line-height:1;position:relative;z-index:1}
+  .skill-name{font-size:.92rem;font-weight:500;color:var(--text);position:relative;z-index:1}
+  .skill-type{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;position:relative;z-index:1}
+  .skill-bar-wrap{height:2px;background:var(--border);position:relative;z-index:1;overflow:hidden}
+  .skill-bar{height:100%;background:var(--card-color,var(--accent));width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+  .skill-card.animate .skill-bar{width:var(--level)}
+  .skill-level-txt{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--card-color,var(--accent));position:relative;z-index:1;align-self:flex-end}
+
+  #work{padding:8rem 3rem}
+  .projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+  .project-card{position:relative;overflow:hidden;cursor:none;background:var(--surface);aspect-ratio:4/3;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+  .project-card:hover{z-index:1;transform:scale(1.01)}
+  .project-card.large{grid-row:span 2;aspect-ratio:auto;min-height:540px}
+  .project-visual{position:absolute;inset:0;transition:transform .6s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center}
+  .project-card:hover .project-visual{transform:scale(1.06)}
+  .pv1{background:linear-gradient(135deg,#0d1b2a,#1b3a5c)}
+  .pv2{background:linear-gradient(135deg,#1a0800,#3a1500)}
+  .pv3{background:linear-gradient(135deg,#0a1a08,#1a380f)}
+  .pv4{background:linear-gradient(135deg,#120a1f,#251040)}
+  .project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.95) 0%,rgba(10,10,10,.15) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:2rem}
+  .project-meta{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem}
+  .project-title{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);color:var(--text);line-height:1.2;margin-bottom:.6rem}
+  .project-tags{display:flex;gap:.4rem;flex-wrap:wrap;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s}
+  .project-card:hover .project-tags{opacity:1;transform:translateY(0)}
+  .tag{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid rgba(240,237,230,.18);color:var(--muted);font-family:'DM Mono',monospace}
+  .project-arrow{position:absolute;top:1.25rem;right:1.25rem;width:36px;height:36px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);opacity:0;transform:translate(-4px,4px);transition:all .3s}
+  .project-card:hover .project-arrow{opacity:1;transform:translate(0,0);background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 3rem}
+  .stat{padding:2.5rem;border-right:1px solid var(--border);text-align:center}
+  .stat:last-child{border-right:none}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--accent);letter-spacing:-.02em;display:block;line-height:1}
+  .stat-label{font-size:.68rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:.4rem}
+
+  #contact{padding:8rem 3rem;max-width:900px;margin:0 auto}
+  .contact-header{text-align:center;margin-bottom:4rem}
+  .contact-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,6rem);letter-spacing:.02em;color:var(--text);line-height:1}
+  .contact-header h2 span{color:var(--accent)}
+  .contact-header p{margin-top:1rem;color:var(--muted);font-size:.88rem;letter-spacing:.05em}
+  .ai-chat{background:var(--surface);border:1px solid var(--border);overflow:hidden}
+  .chat-header{padding:.9rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;background:var(--surface2)}
+  .chat-status{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--accent3);letter-spacing:.1em}
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--accent3);animation:blink 2s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .chat-title{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.1em}
+  .chat-messages{min-height:280px;max-height:380px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+  .message{display:flex;gap:.7rem;max-width:86%;animation:msgIn .3s cubic-bezier(.16,1,.3,1) forwards}
+  .message.user{align-self:flex-end;flex-direction:row-reverse}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .msg-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.55rem;flex-shrink:0;margin-top:2px}
+  .msg-avatar.ai{background:var(--accent);color:var(--bg)}
+  .msg-avatar.usr{background:var(--accent2);color:var(--bg)}
+  .msg-bubble{padding:.7rem 1rem;font-size:.88rem;line-height:1.6;color:var(--text);background:var(--surface2);border:1px solid var(--border)}
+  .message.user .msg-bubble{background:rgba(0,212,255,.07);border-color:rgba(0,212,255,.2)}
+  .typing-indicator{display:flex;gap:4px;align-items:center;padding:4px 0}
+  .typing-dot{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite}
+  .typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+  .chat-input-area{padding:.9rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.7rem;align-items:center;background:var(--surface2)}
+  .chat-input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:.88rem;padding:.65rem 1rem;outline:none;transition:border-color .2s}
+  .chat-input:focus{border-color:rgba(0,212,255,.4)}
+  .chat-input::placeholder{color:var(--muted)}
+  .chat-send{background:var(--accent);color:var(--bg);border:none;padding:.65rem 1.2rem;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;cursor:none;transition:background .2s,transform .1s;white-space:nowrap}
+  .chat-send:hover{background:#33deff}
+  .chat-send:active{transform:scale(.97)}
+  .chat-send:disabled{opacity:.4}
+  .quick-questions{padding:.9rem 1.5rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.45rem}
+  .quick-btn{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.05em;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:none;transition:border-color .2s,color .2s}
+  .quick-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+  footer .logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--accent)}
+  footer p{font-size:.7rem;color:var(--muted);letter-spacing:.1em}
+  .social-links{display:flex;gap:1.5rem}
+  .social-links a{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+  .social-links a:hover{color:var(--accent)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes slideIn{from{opacity:0;transform:translateY(55px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:1.2rem 1.5rem}.nav-links{display:none}
+    #hero,#skills,#work,#contact{padding-left:1.5rem;padding-right:1.5rem}
+    .stats-row{grid-template-columns:1fr 1fr;margin:0 1.5rem}
+    .projects-grid{grid-template-columns:1fr}
+    .project-card.large{grid-row:span 1;min-height:280px}
+    footer{flex-direction:column;gap:1.2rem;text-align:center}
+    body{cursor:auto}#cursor,#cursor-ring{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">Akhilesh Kumar</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div id="particles"></div>
+  <div class="hero-eyebrow">Full Stack Developer — Available for hire</div>
+  <h1 class="hero-name">
+    <span class="line">FULL STACK</span>
+    <span class="line">DEVELOPER</span>
+    <span class="line">&amp; BUILDER</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">Building robust web applications from pixel-perfect frontends to powerful backends — fluent in both .NET and open-source stacks.</p>
+    <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+<section id="skills">
+  <div class="section-label reveal">Technical Skills</div>
+  <div class="skills-intro reveal reveal-d1">The <em>tools</em> I use<br>to build great things.</div>
+  <div class="skill-tabs reveal reveal-d2">
+    <button class="skill-tab active" data-filter="all">All (11)</button>
+    <button class="skill-tab" data-filter="frontend">Frontend (5)</button>
+    <button class="skill-tab" data-filter="backend">Backend (4)</button>
+    <button class="skill-tab" data-filter="database">Database (2)</button>
+  </div>
+  <div class="skills-grid reveal reveal-d3" id="skills-grid"></div>
+</section>
+
+<section id="work">
+  <div class="section-label reveal">Selected Projects</div>
+  <div class="projects-grid">
+    <div class="project-card large reveal reveal-d1">
+      <div class="project-visual pv1">
+        <svg width="260" height="260" viewBox="0 0 260 260" fill="none" opacity=".55">
+          <rect x="30" y="40" width="200" height="160" rx="4" stroke="#00d4ff" stroke-width=".8"/>
+          <rect x="30" y="40" width="200" height="28" rx="4" fill="rgba(0,212,255,.08)" stroke="#00d4ff" stroke-width=".8"/>
+          <circle cx="48" cy="54" r="4" fill="#ff5f57"/><circle cx="62" cy="54" r="4" fill="#febc2e"/><circle cx="76" cy="54" r="4" fill="#28c840"/>
+          <rect x="48" y="82" width="80" height="6" rx="2" fill="rgba(0,212,255,.3)"/>
+          <rect x="48" y="96" width="55" height="5" rx="2" fill="rgba(0,212,255,.15)"/>
+          <rect x="48" y="108" width="100" height="5" rx="2" fill="rgba(0,212,255,.15)"/>
+          <rect x="48" y="125" width="160" height="55" rx="3" fill="rgba(0,212,255,.06)" stroke="rgba(0,212,255,.2)" stroke-width=".8"/>
+          <rect x="60" y="140" width="70" height="24" rx="3" fill="rgba(0,212,255,.2)"/>
+          <text x="95" y="156" text-anchor="middle" fill="rgba(0,212,255,.8)" font-size="8" font-family="monospace">SUBMIT</text>
+        </svg>
+      </div>
+      <div class="project-overlay">
+        <div class="project-meta">2024 — Web App</div>
+        <h3 class="project-title">Hospital Management System</h3>
+        <div class="project-tags">
+          <span class="tag">C#</span><span class="tag">ASP.NET</span><span class="tag">SQL Server</span><span class="tag">Bootstrap</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+    <div class="project-card reveal reveal-d2">
+      <div class="project-visual pv2">
+        <svg width="180" height="140" viewBox="0 0 180 140" fill="none" opacity=".55">
+          <rect x="15" y="15" width="150" height="110" rx="3" stroke="rgba(255,107,53,.4)" stroke-width=".8"/>
+          <rect x="25" y="28" width="55" height="7" rx="2" fill="rgba(255,107,53,.4)"/>
+          <rect x="25" y="52" width="40" height="5" rx="1" fill="rgba(255,107,53,.2)"/>
+          <rect x="25" y="62" width="130" height="5" rx="1" fill="rgba(255,107,53,.1)"/>
+          <rect x="25" y="72" width="130" height="5" rx="1" fill="rgba(255,107,53,.1)"/>
+          <rect x="25" y="82" width="100" height="5" rx="1" fill="rgba(255,107,53,.1)"/>
+          <rect x="25" y="96" width="60" height="18" rx="2" fill="rgba(255,107,53,.25)"/>
+          <text x="55" y="108" text-anchor="middle" fill="rgba(255,107,53,.8)" font-size="7" font-family="monospace">ADD ITEM</text>
+        </svg>
+      </div>
+      <div class="project-overlay">
+        <div class="project-meta">2024 — E-Commerce</div>
+        <h3 class="project-title">Inventory &amp; POS System</h3>
+        <div class="project-tags">
+          <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">jQuery</span><span class="tag">Bootstrap</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+    <div class="project-card reveal reveal-d2">
+      <div class="project-visual pv3">
+        <svg width="180" height="140" viewBox="0 0 180 140" fill="none" opacity=".55">
+          <rect x="20" y="20" width="60" height="100" rx="3" stroke="rgba(124,252,0,.3)" stroke-width=".8"/>
+          <rect x="100" y="20" width="60" height="100" rx="3" stroke="rgba(124,252,0,.3)" stroke-width=".8"/>
+          <line x1="80" y1="70" x2="100" y2="70" stroke="rgba(124,252,0,.5)" stroke-width=".8" stroke-dasharray="3,2"/>
+          <circle cx="80" cy="70" r="3" fill="rgba(124,252,0,.6)"/>
+          <circle cx="100" cy="70" r="3" fill="rgba(124,252,0,.6)"/>
+          <rect x="28" y="30" width="44" height="5" rx="1" fill="rgba(124,252,0,.3)"/>
+          <rect x="28" y="42" width="35" height="4" rx="1" fill="rgba(124,252,0,.15)"/>
+          <rect x="28" y="52" width="40" height="4" rx="1" fill="rgba(124,252,0,.15)"/>
+          <rect x="108" y="30" width="44" height="5" rx="1" fill="rgba(124,252,0,.3)"/>
+          <rect x="108" y="42" width="35" height="4" rx="1" fill="rgba(124,252,0,.15)"/>
+          <rect x="108" y="52" width="40" height="4" rx="1" fill="rgba(124,252,0,.15)"/>
+        </svg>
+      </div>
+      <div class="project-overlay">
+        <div class="project-meta">2023 — API</div>
+        <h3 class="project-title">REST API with Python</h3>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+    <div class="project-card reveal reveal-d3">
+      <div class="project-visual pv4">
+        <svg width="180" height="140" viewBox="0 0 180 140" fill="none" opacity=".55">
+          <rect x="15" y="55" width="20" height="65" rx="1" fill="rgba(120,80,200,.4)"/>
+          <rect x="45" y="38" width="20" height="82" rx="1" fill="rgba(140,90,220,.5)"/>
+          <rect x="75" y="22" width="20" height="98" rx="1" fill="rgba(160,100,240,.6)"/>
+          <rect x="105" y="42" width="20" height="78" rx="1" fill="rgba(140,90,220,.5)"/>
+          <rect x="135" y="30" width="20" height="90" rx="1" fill="rgba(150,95,230,.55)"/>
+          <polyline points="25,55 55,38 85,22 115,42 145,30" stroke="rgba(180,120,255,.6)" stroke-width="1" fill="none"/>
+          <circle cx="25" cy="55" r="3" fill="rgba(200,140,255,.8)"/>
+          <circle cx="55" cy="38" r="3" fill="rgba(200,140,255,.8)"/>
+          <circle cx="85" cy="22" r="3" fill="rgba(200,140,255,.8)"/>
+          <circle cx="115" cy="42" r="3" fill="rgba(200,140,255,.8)"/>
+          <circle cx="145" cy="30" r="3" fill="rgba(200,140,255,.8)"/>
+        </svg>
+      </div>
+      <div class="project-overlay">
+        <div class="project-meta">2023 — Dashboard</div>
+        <h3 class="project-title">Analytics Dashboard</h3>
+        <div class="project-tags">
+          <span class="tag">HTML/CSS</span><span class="tag">JS</span><span class="tag">jQuery</span><span class="tag">Bootstrap</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-row reveal">
+  <div class="stat"><span class="stat-num" data-target="11">0</span><span class="stat-label">Technologies</span></div>
+  <div class="stat"><span class="stat-num" data-target="30">0</span><span class="stat-label">Projects Built</span></div>
+  <div class="stat"><span class="stat-num" data-target="4">0</span><span class="stat-label">Years Coding</span></div>
+  <div class="stat"><span class="stat-num" data-target="15">0</span><span class="stat-label">Happy Clients</span></div>
+</div>
+
+<section id="contact">
+  <div class="contact-header reveal">
+    <h2>LET'S <span>BUILD</span></h2>
+    <p>Ask my AI assistant about skills, projects, or availability</p>
+  </div>
+  <div class="ai-chat reveal reveal-d1">
+    <div class="chat-header">
+      <div class="chat-status"><div class="status-dot"></div>Online</div>
+      <div class="chat-title">portfolio/assistant — powered by Claude AI</div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message">
+        <div class="msg-avatar ai">AI</div>
+        <div class="msg-bubble">Hi! I'm this developer's AI assistant. They're skilled in HTML, CSS, JS, Bootstrap, C#, C, Python, PHP, MySQL, SQL Server, and jQuery. Ask me anything about their work or how to hire them!</div>
+      </div>
+    </div>
+    <div class="quick-questions" id="quick-qs">
+      <button class="quick-btn" onclick="sendQuick(this)">What backend skills do you have?</button>
+      <button class="quick-btn" onclick="sendQuick(this)">Can you build .NET apps?</button>
+      <button class="quick-btn" onclick="sendQuick(this)">What databases do you use?</button>
+      <button class="quick-btn" onclick="sendQuick(this)">Are you available for hire?</button>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Ask about skills, projects, availability..."/>
+      <button class="chat-send" id="chat-send" onclick="sendMessage()">SEND →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Akhilesh Kumar</div>
+  <p>© 2025 — Full Stack Developer</p>
+  <div class="social-links">
+    <a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">Email</a>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+  setTimeout(()=>{ring.style.left=mx+'px';ring.style.top=my+'px';},90);
+});
+
+// Particles
+const snippets=['</div>','function()','SELECT *','#include','import','<?php','$(this)','@media','C# .NET','while(true)','async/await','NULL','int main','Bootstrap','return true','for(;;)','mysqli_query','Console.Write'];
+const pc=document.getElementById('particles');
+snippets.forEach(s=>{
+  const p=document.createElement('div');p.className='particle';p.textContent=s;
+  p.style.left=(4+Math.random()*92)+'%';p.style.bottom='-2rem';
+  p.style.animationDuration=(18+Math.random()*24)+'s';
+  p.style.animationDelay=(Math.random()*22)+'s';
+  pc.appendChild(p);
+});
+
+// Marquee
+const tech=['HTML5','★','CSS3','★','JavaScript','★','Bootstrap','★','C#','★','C','★','Python','★','PHP','★','MySQL','★','SQL Server','★','jQuery','★'];
+const track=document.getElementById('marquee-track');
+[...tech,...tech].forEach(t=>{
+  const d=document.createElement('div');
+  d.className='marquee-item'+(t==='★'?' hi':'');
+  d.textContent=t;track.appendChild(d);
+});
+
+// Skills data
+const skills=[
+  {name:'HTML5',     icon:'&lt;/&gt;', type:'frontend', level:95, cat:'Frontend',  color:'#e44d26'},
+  {name:'CSS3',      icon:'{ }',       type:'frontend', level:90, cat:'Frontend',  color:'#264de4'},
+  {name:'JavaScript',icon:'JS',        type:'frontend', level:88, cat:'Frontend',  color:'#f0db4f'},
+  {name:'Bootstrap', icon:'B',         type:'frontend', level:92, cat:'Frontend',  color:'#7952b3'},
+  {name:'jQuery',    icon:'$( )',      type:'frontend', level:85, cat:'Frontend',  color:'#0769ad'},
+  {name:'C#',        icon:'C#',        type:'backend',  level:87, cat:'Backend',   color:'#9b4f96'},
+  {name:'C',         icon:'C',         type:'backend',  level:75, cat:'Backend',   color:'#a8b9cc'},
+  {name:'Python',    icon:'Py',        type:'backend',  level:82, cat:'Backend',   color:'#3572A5'},
+  {name:'PHP',       icon:'PHP',       type:'backend',  level:84, cat:'Backend',   color:'#777bb4'},
+  {name:'MySQL',     icon:'DB',        type:'database', level:88, cat:'Database',  color:'#00758f'},
+  {name:'SQL Server',icon:'SQL',       type:'database', level:83, cat:'Database',  color:'#cc2927'},
+];
+
+function renderSkills(filter){
+  const grid=document.getElementById('skills-grid');
+  grid.innerHTML='';
+  const list=filter==='all'?skills:skills.filter(s=>s.type===filter);
+  list.forEach((s,i)=>{
+    const c=document.createElement('div');c.className='skill-card';
+    c.style.setProperty('--card-color',s.color);
+    c.style.setProperty('--level',s.level+'%');
+    c.style.transitionDelay=(i*.05)+'s';
+    c.innerHTML=`<div class="skill-icon">${s.icon}</div><div><div class="skill-name">${s.name}</div><div class="skill-type">${s.cat}</div></div><div class="skill-bar-wrap"><div class="skill-bar"></div></div><div class="skill-level-txt">${s.level}%</div>`;
+    grid.appendChild(c);
+    setTimeout(()=>c.classList.add('animate'),80+i*55);
+  });
+}
+renderSkills('all');
+document.querySelectorAll('.skill-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.skill-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    renderSkills(tab.dataset.filter);
+  });
+});
+
+// Reveal
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// Counters
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-target]').forEach(el=>{
+        const t=+el.dataset.target;let n=0;
+        const step=()=>{n+=Math.ceil(t/35);if(n>=t){el.textContent=t+'+';return;}el.textContent=n;requestAnimationFrame(step);};
+        requestAnimationFrame(step);
+      });
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+const sr=document.querySelector('.stats-row');if(sr)cObs.observe(sr);
+
+// Parallax
+window.addEventListener('scroll',()=>{
+  const hn=document.querySelector('.hero-name');
+  if(hn)hn.style.transform=`translateY(${window.scrollY*.12}px)`;
+});
+
+// AI Chat
+const CONTEXT=`You are an AI assistant for a Full Stack Developer's portfolio. Here's their profile:
+
+TECHNICAL SKILLS (all 11):
+Frontend: HTML5, CSS3, JavaScript (ES6+), Bootstrap 4/5, jQuery
+Backend: C# (ASP.NET MVC/.NET Core), C (systems programming), Python (Flask/Django), PHP
+Databases: MySQL, Microsoft SQL Server (T-SQL, stored procedures, queries)
+
+PROJECTS:
+- Hospital Management System: C#, ASP.NET, SQL Server, Bootstrap — patient records, appointments, billing
+- Inventory & POS System: PHP, MySQL, jQuery, Bootstrap — stock management, sales tracking
+- REST API with Python Flask: Python, MySQL — RESTful endpoints, JSON responses
+- Analytics Dashboard: HTML/CSS, JS, jQuery, Bootstrap — charts, data visualization
+
+EXPERIENCE: 4+ years, 30+ projects, 15+ clients
+AVAILABILITY: Open to freelance, contract, and full-time roles
+
+Be concise (2–3 sentences), enthusiastic, and highlight specific skills relevant to questions. For hiring inquiries, direct them to use the email link.`;
+
+let history=[],busy=false;
+
+async function callClaude(msg){
+  const msgs=[...history.map(m=>({role:m.role,content:m.content})),{role:'user',content:msg}];
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:CONTEXT,messages:msgs})
+  });
+  const d=await r.json();
+  return d.content?.[0]?.text||"Connection hiccup — try again!";
+}
+
+function addMsg(role,text){
+  const wrap=document.getElementById('chat-messages');
+  const d=document.createElement('div');
+  d.className='message'+(role==='user'?' user':'');
+  d.innerHTML=`<div class="msg-avatar ${role==='user'?'usr':'ai'}">${role==='user'?'YOU':'AI'}</div><div class="msg-bubble">${text}</div>`;
+  wrap.appendChild(d);wrap.scrollTop=wrap.scrollHeight;
+}
+
+function showTyping(){
+  const wrap=document.getElementById('chat-messages');
+  const d=document.createElement('div');d.className='message';d.id='typing';
+  d.innerHTML=`<div class="msg-avatar ai">AI</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  wrap.appendChild(d);wrap.scrollTop=wrap.scrollHeight;
+}
+
+async function sendMessage(){
+  if(busy)return;
+  const inp=document.getElementById('chat-input');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';busy=true;
+  document.getElementById('chat-send').disabled=true;
+  document.getElementById('quick-qs').style.display='none';
+  addMsg('user',txt);showTyping();
+  try{
+    const reply=await callClaude(txt);
+    document.getElementById('typing')?.remove();
+    addMsg('assistant',reply);
+    history.push({role:'user',content:txt},{role:'assistant',content:reply});
+  }catch(e){
+    document.getElementById('typing')?.remove();
+    addMsg('assistant','Connection issue — please try again!');
+  }
+  busy=false;document.getElementById('chat-send').disabled=false;
+}
+
+function sendQuick(btn){document.getElementById('chat-input').value=btn.textContent;sendMessage();}
+document.getElementById('chat-input').addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage();});
+</script>
+</body>
+</html>
